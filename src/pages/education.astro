@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import { education, certifications } from '../data/education';
+---
+
+<Base
+  title="Education"
+  description="Quantum computing at Universidad Politécnica de Madrid, AI/ML at Caltech, innovation at HEC Paris, and more."
+>
+  <section class="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-24">
+    <p class="eyebrow">Education</p>
+    <h1
+      class="mt-5 font-serif text-4xl font-medium leading-tight tracking-tight text-ink sm:text-5xl"
+    >
+      A habit of <em class="italic text-accent">going deeper</em>.
+    </h1>
+
+    <ol class="mt-14">
+      {
+        education.map((entry) => (
+          <li
+            class="grid gap-2 border-t border-line py-8 sm:grid-cols-[10rem_1fr] sm:gap-8"
+            data-reveal
+          >
+            <p class="text-sm text-ink-soft">
+              {entry.start} — {entry.end}
+            </p>
+            <div>
+              <h2 class="font-serif text-xl font-medium text-ink">
+                {entry.degree}, {entry.field}
+              </h2>
+              <p class="mt-1 text-sm font-medium text-accent">
+                {entry.institution}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="mt-16 rounded-lg border border-line bg-paper-deep p-8" data-reveal>
+      <p class="eyebrow mb-4">Certifications</p>
+      <ul class="space-y-2">
+        {
+          certifications.map((c) => (
+            <li class="text-sm text-ink-soft">
+              <span class="font-medium text-ink">{c.name}</span> — {c.detail}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>

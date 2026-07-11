@@ -1,0 +1,175 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import TestimonialSlider from '../components/TestimonialSlider.astro';
+import { site, cta } from '../data/site';
+import {
+  hero,
+  positioning,
+  focusAreas,
+  values,
+  approach,
+  explore,
+} from '../data/home';
+---
+
+<Base title={site.titleSuffix} description={site.defaultDescription}>
+  <!-- Hero -->
+  <section class="mx-auto max-w-6xl px-5 pb-20 pt-16 sm:px-8 sm:pt-24">
+    <div class="grid items-center gap-12 lg:grid-cols-[3fr_2fr]">
+      <div>
+        <p class="eyebrow">{hero.eyebrow}</p>
+        <h1
+          class="mt-5 font-serif text-4xl font-medium leading-tight tracking-tight text-ink sm:text-5xl lg:text-6xl"
+        >
+          {hero.headingStart}<em class="italic text-accent"
+            >{hero.headingAccent}</em
+          >{hero.headingEnd}
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
+          {hero.valueProp}
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href={cta.href}
+            class="rounded-full bg-accent px-6 py-3 text-sm font-medium text-paper transition-colors hover:bg-accent-deep"
+          >
+            {hero.primaryCta.label}
+          </a>
+          <a
+            href={hero.secondaryCta.href}
+            class="rounded-full border border-ink/20 px-6 py-3 text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+          >
+            {hero.secondaryCta.label}
+          </a>
+        </div>
+      </div>
+
+      <div class="mx-auto w-full max-w-sm lg:max-w-none">
+        <img
+          src="/portrait.jpg"
+          alt={hero.portraitAlt}
+          width="800"
+          height="1000"
+          class="aspect-[4/5] w-full rounded-lg border border-line object-cover"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Positioning -->
+  <section class="border-y border-line bg-paper-deep">
+    <div class="mx-auto max-w-6xl px-5 py-20 sm:px-8" data-reveal>
+      <SectionHeading eyebrow={positioning.eyebrow} class="max-w-3xl" />
+      <p
+        class="mt-5 max-w-3xl font-serif text-xl leading-relaxed text-ink sm:text-2xl"
+      >
+        {positioning.body}
+      </p>
+    </div>
+  </section>
+
+  <!-- Focus areas -->
+  <section class="mx-auto max-w-6xl px-5 py-20 sm:px-8" data-reveal>
+    <SectionHeading eyebrow="Focus areas" heading="Where I do my best work" />
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+      {
+        focusAreas.map((area) => (
+          <div class="rounded-lg border border-line bg-white/60 p-7">
+            <h3 class="font-serif text-xl font-medium text-ink">
+              {area.title}
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+              {area.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Values (placeholders — wording to come from Eli) -->
+  <section class="border-y border-line bg-paper-deep">
+    <div class="mx-auto max-w-6xl px-5 py-20 sm:px-8" data-reveal>
+      <div class="flex flex-wrap items-baseline gap-3">
+        <SectionHeading eyebrow={values.eyebrow} heading="Values" />
+        <span
+          class="rounded-full border border-line bg-paper px-2.5 py-0.5 text-[11px] uppercase tracking-wide text-ink-soft"
+        >
+          Wording to come
+        </span>
+      </div>
+      <div class="mt-10 grid gap-6 sm:grid-cols-3">
+        {
+          values.items.map((item) => (
+            <div class="border-l-2 border-accent/40 pl-5">
+              <h3 class="font-medium text-ink">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+                {item.description}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="mx-auto max-w-6xl px-5 py-20 sm:px-8" data-reveal>
+    <SectionHeading eyebrow={approach.eyebrow} heading="Approach" />
+    <div class="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+      {
+        approach.items.map((item, i) => (
+          <div class="flex gap-5">
+            <span
+              class="font-serif text-2xl italic text-accent/60"
+              aria-hidden="true"
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div>
+              <h3 class="font-medium text-ink">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+                {item.description}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <div class="border-y border-line bg-paper-deep">
+    <TestimonialSlider />
+  </div>
+
+  <!-- Explore my work -->
+  <section class="mx-auto max-w-6xl px-5 py-20 sm:px-8" data-reveal>
+    <SectionHeading eyebrow={explore.eyebrow} heading="Explore further" />
+    <div class="mt-10 grid gap-6 sm:grid-cols-3">
+      {
+        explore.cards.map((card) => (
+          <a
+            href={card.href}
+            class="group rounded-lg border border-line bg-white/60 p-7 transition-shadow hover:shadow-md"
+          >
+            <h3 class="font-serif text-xl font-medium text-ink transition-colors group-hover:text-accent">
+              {card.title}
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+              {card.description}
+            </p>
+            <span
+              class="mt-5 inline-block text-sm font-medium text-accent"
+              aria-hidden="true"
+            >
+              →
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>

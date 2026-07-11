@@ -1,0 +1,68 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/newsreader';
+@import '@fontsource-variable/newsreader/wght-italic.css';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Newsreader Variable', ui-serif, Georgia, serif;
+
+  /* Neutral editorial base + one restrained accent (muted pine green) */
+  --color-paper: #f7f6f3;
+  --color-paper-deep: #efede7;
+  --color-ink: #1c1b18;
+  --color-ink-soft: #5a564c;
+  --color-line: #e3e0d8;
+  --color-accent: #3e5c50;
+  --color-accent-deep: #2e463c;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+
+  ::selection {
+    @apply bg-accent text-paper;
+  }
+}
+
+@layer components {
+  /* Small uppercase letter-spaced label above sections */
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-[0.18em] text-accent;
+  }
+
+  .prose-body p + p {
+    @apply mt-5;
+  }
+}
+
+/* Scroll reveal — only active when JS is available, respects reduced motion */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+html.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  html.js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

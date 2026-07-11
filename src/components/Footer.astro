@@ -1,0 +1,63 @@
+---
+import { site, nav } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-line bg-paper-deep">
+  <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+    <div class="flex flex-col gap-10 md:flex-row md:justify-between">
+      <div class="max-w-sm">
+        <p class="font-serif text-lg font-medium">{site.name}</p>
+        <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+          {site.role} · {site.location}
+        </p>
+      </div>
+
+      <nav aria-label="Footer">
+        <ul class="grid grid-cols-2 gap-x-10 gap-y-2 sm:grid-cols-3">
+          {
+            nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="text-sm text-ink-soft transition-colors hover:text-accent"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="text-sm">
+        <p class="eyebrow mb-3">Elsewhere</p>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href={site.linkedin}
+              rel="me noopener"
+              target="_blank"
+              class="text-ink-soft transition-colors hover:text-accent"
+            >
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a
+              href={`mailto:${site.email}`}
+              class="text-ink-soft transition-colors hover:text-accent"
+            >
+              {site.email}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="mt-12 border-t border-line pt-6 text-xs text-ink-soft">
+      © {year} {site.name}. All rights reserved.
+    </p>
+  </div>
+</footer>

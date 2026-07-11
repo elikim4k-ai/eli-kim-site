@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const entries = (await getCollection('writing', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-NZ', { year: 'numeric', month: 'long' });
+---
+
+<Base
+  title="Writing"
+  description="Notes and research on quantum computing, applied AI, and building products."
+>
+  <section class="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-24">
+    <p class="eyebrow">Writing</p>
+    <h1
+      class="mt-5 font-serif text-4xl font-medium leading-tight tracking-tight text-ink sm:text-5xl"
+    >
+      Notes worth <em class="italic text-accent">keeping</em>.
+    </h1>
+
+    {
+      entries.length === 0 ? (
+        <div class="mt-14 rounded-lg border border-line bg-paper-deep p-10 text-center" data-reveal>
+          <p class="font-serif text-xl text-ink">Writing is on its way.</p>
+          <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ink-soft">
+            Articles, research notes, and talks will appear here. In the
+            meantime, you can find me on{' '}
+            <a
+              href="https://www.linkedin.com/in/eli-kim-4k"
+              rel="me noopener"
+              target="_blank"
+              class="font-medium text-accent underline underline-offset-4"
+            >
+              LinkedIn
+            </a>
+            .
+          </p>
+        </div>
+      ) : (
+        <ol class="mt-14">
+          {entries.map((entry) => (
+            <li class="border-t border-line py-8" data-reveal>
+              <p class="text-sm text-ink-soft">{formatDate(entry.data.date)}</p>
+              <h2 class="mt-2 font-serif text-2xl font-medium text-ink">
+                <a
+                  href={entry.data.externalUrl ?? `/writing/`}
+                  rel={entry.data.externalUrl ? 'noopener' : undefined}
+                  target={entry.data.externalUrl ? '_blank' : undefined}
+                  class="transition-colors hover:text-accent"
+                >
+                  {entry.data.title}
+                </a>
+              </h2>
+              <p class="mt-2 max-w-2xl text-sm leading-relaxed text-ink-soft">
+                {entry.data.description}
+              </p>
+            </li>
+          ))}
+        </ol>
+      )
+    }
+  </section>
+</Base>

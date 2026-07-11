@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) =>
+    Number(b.data.featured) - Number(a.data.featured) ||
+    a.data.order - b.data.order
+);
+const hasUnconfirmed = projects.some((p) => p.data.unconfirmed);
+---
+
+<Base
+  title="Projects"
+  description="Selected projects across quantum readiness, applied AI, and product — the problem, the approach, and my role in each."
+>
+  <section class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+    <p class="eyebrow">Projects</p>
+    <h1
+      class="mt-5 max-w-3xl font-serif text-4xl font-medium leading-tight tracking-tight text-ink sm:text-5xl"
+    >
+      Work I can <em class="italic text-accent">stand behind</em>.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">
+      Each project below covers the problem, the technical approach, and the
+      role I played.
+    </p>
+
+    {
+      hasUnconfirmed && (
+        <p class="mt-6 inline-block rounded border border-line bg-paper-deep px-4 py-2 text-sm text-ink-soft">
+          Entries marked <strong>“Draft — unconfirmed”</strong> were seeded from
+          an earlier plan and still need Eli's confirmation.
+        </p>
+      )
+    }
+
+    <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+</Base>
